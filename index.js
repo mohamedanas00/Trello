@@ -4,4 +4,4 @@ const app=express()
 const port = 5000
 
 bootstrap(app,express)
-app.listen(port,()=>{console.log(`App is work on port ${port}`)})
+app.listen(port,()=> console.log(`App is work on port ${port}`))
