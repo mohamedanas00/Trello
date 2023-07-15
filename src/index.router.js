@@ -1,3 +1,4 @@
+import connectDB from "../DB/connection"
 
 
 const bootstrap = (app,express)=>{
@@ -5,6 +6,7 @@ const bootstrap = (app,express)=>{
     //userRouting
     //tasktrelloRouting
     //DB
+    connectDB()
     app.use('*',(req,res,next)=>{
        return res.json({message:"In-Valide Routing❌"})
     })
