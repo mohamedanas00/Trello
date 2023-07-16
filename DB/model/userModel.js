@@ -1,6 +1,14 @@
 import { Schema ,model } from "mongoose";
 
 const userSchema =new Schema({
+    firstName:{
+        type:String,
+        required:true,
+    },
+    lastName:{
+        type:String,
+        required:true,
+    },
     userName:{
         type:String,
         required:true,
@@ -16,6 +24,10 @@ const userSchema =new Schema({
         type: String,
         default: "Male",
         enum: ['Male', 'Female']
+    },
+    isOnline:{
+        type:Boolean,
+        required:true,
     },
     age:Number,
 },{
