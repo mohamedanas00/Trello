@@ -3,7 +3,7 @@ import { asyncHandler } from '../../utils/errorHandeling.js'
 import userModel  from '../../../../DB/model/user.js'
 import jwt from "jsonwebtoken";
 
-
+//1-signUp
 export const signup =asyncHandler( async (req, res, next) => {
     const {userName , email , password ,phone,age , gender } = req.body
     console.log({ userName , email , password ,phone,age , gender });
@@ -23,7 +23,7 @@ export const signup =asyncHandler( async (req, res, next) => {
 }
 )
 
-
+//2-login-->with create token
 export const login =asyncHandler( async (req, res, next) => {
 
     const { email, password } = req.body
