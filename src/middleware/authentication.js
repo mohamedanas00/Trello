@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken";
-import userModel from "../../DB/model/user";
-import { asyncHandler } from "../module/utils/errorHandeling";
+import userModel from "../../DB/model/user.js";
+import { asyncHandler } from "../module/utils/errorHandeling.js";
 
+
+// export let accessData
 export const auth=asyncHandler( async(req,res,next)=>{
     const{authorization}=req.headers;
     console.log({authorization})
@@ -24,6 +26,8 @@ export const auth=asyncHandler( async(req,res,next)=>{
         return next(new Error("Not Register account"),{cause:400})
 
     }
+    // accessData=user;
+    req.user=user
     return next()
 }
 )
