@@ -8,9 +8,14 @@ export const signup =asyncHandler( async (req, res, next) => {
     const {userName , email , password ,phone,age , gender } = req.body
     console.log({ userName , email , password ,phone,age , gender });
 
-    const checkUser = await userModel.findOne({ email }) 
-    if (checkUser) {
-        return next(new Error("Email Exist") )
+    const checkUserEmail = await userModel.findOne({ email }) 
+    const checkUserPhone = await userModel.findOne({ phone }) 
+
+    if (checkUserEmail) {
+        return next(new Error("Email Already Exist") )
+    }
+    if(checkUserPhone){
+        return next(new Error("Phone Already Exist") )
     }
     const hashPassword = bcrypt.hashSync(password, 8)
     const user = await userModel.create({ userName,  email, password: hashPassword,phone,age , gender })
