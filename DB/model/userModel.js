@@ -27,7 +27,11 @@ const userSchema =new Schema({
     },
     isOnline:{
         type:Boolean,
-        required:true,
+        default: true,
+    },
+    isDeleted:{
+        type:Boolean,
+        default: false,
     },
     age:Number,
 },{

@@ -23,8 +23,10 @@ export const auth=asyncHandler( async(req,res,next)=>{
     }
     const user =await userModel.findById(decoded.id)
     if(!user){
-        return next(new Error("Not Register account"),{cause:400})
-
+        return next(new Error("Not Register account!Sign up"),{cause:400})
+    }
+    if(!user.isOnline){
+        return next(new Error("Please logIn First"))
     }
     // accessData=user;
     req.user=user

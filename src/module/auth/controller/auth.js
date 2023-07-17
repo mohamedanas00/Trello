@@ -46,6 +46,9 @@ export const login =asyncHandler( async (req, res, next) => {
         id:user._id },
         "7mdaelHandMedoKEKO"
     )
+    //backonline
+    await userModel.updateOne({ _id:user._id }, {  isOnline:true});    
+
     return res.json({ message: "login Successfully🟩", token })
 }
 )

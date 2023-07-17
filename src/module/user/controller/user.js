@@ -45,3 +45,10 @@ export const deleteUser=asyncHandler(async(req,res,next)=>{
     await userModel.deleteOne({ _id:req.user._id });
     return res.json({ message: "User Deleted Successfully✅: " })
 })
+
+//7-logout(online/offline)
+export const logout=asyncHandler(async(req,res,next)=>{
+    await userModel.updateOne({ _id:req.user._id }, {  isOnline:false});
+    return res.json({ message: "You are now logged out🚪" })
+
+})
