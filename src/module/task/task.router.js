@@ -5,4 +5,6 @@ const taskRouter = Router()
 
 
 taskRouter.post('/',auth,taskCountroller.addTask)
+taskRouter.get('/',taskCountroller.getAllTask)
+
 export default taskRouter
