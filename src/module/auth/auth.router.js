@@ -6,7 +6,7 @@ const authRouter = Router()
 
 
 authRouter.post("/",authController.signup)
-authRouter.get("/",authController.login)
+authRouter.post("/login",authController.login)
 authRouter.patch('/',auth,authController.logout)
 
 

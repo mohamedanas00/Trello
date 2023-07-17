@@ -1,5 +1,6 @@
 import connectDB from "../DB/connection.js"
 import authRouter from "./module/auth/auth.router.js"
+import taskRouter from "./module/task/task.router.js"
 import userRouter from "./module/user/user.router.js"
 import { globalErrorHandling } from "./module/utils/errorHandeling.js"
 
@@ -10,8 +11,8 @@ const bootstrap = (app,express)=>{
     app.use('/auth',authRouter)
     //userRouting
     app.use('/user',userRouter)
-    // app.use("/user")
     //tasktrelloRouting
+    app.use('/task',taskRouter)
     //DB
     connectDB()
     app.use('*',(req,res,next)=>{

@@ -1,4 +1,4 @@
-import { Schema ,model } from "mongoose";
+import { Schema ,Types,model } from "mongoose";
 
 const userSchema =new Schema({
     firstName:{
@@ -33,6 +33,18 @@ const userSchema =new Schema({
         type:Boolean,
         default: false,
     },
+    todoTasks:[
+        {
+            type:Types.ObjectId,
+            ref: 'Task'
+        }
+    ],
+    assginTasks:[
+        {
+            type: Types.ObjectId,
+            ref: 'Task'
+        }
+    ],
     age:Number,
 },{
     timestamps:true
