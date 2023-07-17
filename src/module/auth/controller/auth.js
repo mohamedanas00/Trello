@@ -32,6 +32,7 @@ export const login =asyncHandler( async (req, res, next) => {
 
     const { email, password } = req.body
     const user = await userModel.findOne({ email })
+    console.log(user);
     if (!user) {
         return next(new Error("In-valid email"))
     }
