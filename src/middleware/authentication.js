@@ -22,12 +22,23 @@ export const auth=asyncHandler( async(req,res,next)=>{
         return next(new Error("In-Valid User"),{cause:400})
     }
     const user =await userModel.findById(decoded.id)
+
+    // if(user){
+    //     if(((!user.isOnline)||user.isDeleted)){
+    //          return next(new Error("Please logIn First"))
+    //     }
+    // }
+    // else{
+    //     return next(new Error("Not Register account!Sign up"),{cause:400})
+    // }
+
     if(!user){
         return next(new Error("Not Register account!Sign up"),{cause:400})
     }
-    if((!user.isOnline)||user.isDeleted){
+    if(((!user.isOnline)||user.isDeleted)){
         return next(new Error("Please logIn First"))
-    }
+     }
+
  
     // accessData=user;
     req.user=user
