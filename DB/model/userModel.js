@@ -27,7 +27,7 @@ const userSchema =new Schema({
     },
     isOnline:{
         type:Boolean,
-        default: true,
+        default: false,
     },
     isDeleted:{
         type:Boolean,

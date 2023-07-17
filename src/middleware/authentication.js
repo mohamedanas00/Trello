@@ -25,9 +25,10 @@ export const auth=asyncHandler( async(req,res,next)=>{
     if(!user){
         return next(new Error("Not Register account!Sign up"),{cause:400})
     }
-    if(!user.isOnline){
+    if((!user.isOnline)||user.isDeleted){
         return next(new Error("Please logIn First"))
     }
+ 
     // accessData=user;
     req.user=user
     return next()

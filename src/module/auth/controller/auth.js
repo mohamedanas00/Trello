@@ -47,8 +47,16 @@ export const login =asyncHandler( async (req, res, next) => {
         "7mdaelHandMedoKEKO"
     )
     //backonline
-    await userModel.updateOne({ _id:user._id }, {  isOnline:true});    
+    await userModel.updateOne({ _id:user._id }, { isDeleted:false });
+    await userModel.updateOne({ _id:user._id }, { isOnline:true });
 
     return res.json({ message: "login Successfully🟩", token })
 }
 )
+
+
+//7-logout(online/offline)
+export const logout=asyncHandler(async(req,res,next)=>{
+    await userModel.updateOne({ _id:req.user._id }, {  isOnline:false});
+    return res.json({ message: "You are now logged out🚪" })
+})

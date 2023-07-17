@@ -46,9 +46,11 @@ export const deleteUser=asyncHandler(async(req,res,next)=>{
     return res.json({ message: "User Deleted Successfully✅: " })
 })
 
-//7-logout(online/offline)
-export const logout=asyncHandler(async(req,res,next)=>{
-    await userModel.updateOne({ _id:req.user._id }, {  isOnline:false});
-    return res.json({ message: "You are now logged out🚪" })
-
+//6-soft delete(user must be logged in)
+export const softDelete=asyncHandler(async(req,res,next)=>{
+    await userModel.updateOne({ _id:req.user._id }, {  isDeleted:true});
+    return res.json({ message: "Done🟩" })
 })
+
+
+
