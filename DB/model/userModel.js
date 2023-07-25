@@ -45,6 +45,7 @@ const userSchema =new Schema({
             ref: 'Task'
         }
     ],
+    confirmEmail: { type: Boolean, default: false },
     age:Number,
 },{
     timestamps:true

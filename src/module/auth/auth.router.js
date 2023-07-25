@@ -7,6 +7,9 @@ const authRouter = Router()
 
 authRouter.post("/",authController.signup)
 authRouter.post("/login",authController.login)
+authRouter.get("/confirmEmail/:token", authController.confirmEmail)
+authRouter.get("/newConfirmEmail/:token", authController.newConfirmEmail)
+
 authRouter.patch('/',auth,authController.logout)
 
 
