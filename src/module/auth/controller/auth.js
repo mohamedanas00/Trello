@@ -1,29 +1,36 @@
 import bcrypt from 'bcryptjs'
 import { asyncHandler } from '../../utils/errorHandeling.js'
-import userModel  from '../../../../DB/model/userModel.js'
+import userModel from '../../../../DB/model/userModel.js'
 import jwt from "jsonwebtoken";
 import sendEmail from '../../utils/email.js';
+import * as validators from '../valdation.js'
+
 
 //1-signUp
-export const signup =asyncHandler( async (req, res, next) => {
-    const {userName,firstName, lastName , email , password,cPassword,phone,age , gender } = req.body
-    console.log({ userName ,firstName,lastName, email , password ,phone,age , gender });
-  
-    if(password!=cPassword){
-        return next(new Error("Check Your cPassword again!") )
+export const signup = asyncHandler(async (req, res, next) => {
+    const { userName, firstName, lastName, email, password, cPassword, phone, age, gender } = req.body
+    console.log({ userName, firstName, lastName, email, password, phone, age, gender });
+    const valdationResult = validators.signup.validate(req.body)
+
+    if (valdationResult.error) {
+        return res.json({ message: "Valditaion Error", ERR: valdationResult.error.details })
     }
 
-    const checkUserEmail = await userModel.findOne({ email }) 
-    const checkUserPhone = await userModel.findOne({ phone }) 
+    if (password != cPassword) {
+        return next(new Error("Check Your cPassword again!"))
+    }
+
+    const checkUserEmail = await userModel.findOne({ email })
+    const checkUserPhone = await userModel.findOne({ phone })
 
     if (checkUserEmail) {
-        return next(new Error("Email Already Exist") )
+        return next(new Error("Email Already Exist"))
     }
-    if(checkUserPhone){
-        return next(new Error("Phone Already Exist") )
+    if (checkUserPhone) {
+        return next(new Error("Phone Already Exist"))
     }
-    const hashPassword = bcrypt.hashSync(password,parseInt(process.env.SALT_ROUND))
-    const user = await userModel.create({ userName,firstName,lastName,  email, password: hashPassword,phone,age , gender })
+    const hashPassword = bcrypt.hashSync(password, parseInt(process.env.SALT_ROUND))
+    const user = await userModel.create({ userName, firstName, lastName, email, password: hashPassword, phone, age, gender })
     const token = jwt.sign({ id: user._id, email: user.email }, process.env.EMAIL_SIGNATURE, { expiresIn: 60 * 5 })
     const newConfirmEmailToken = jwt.sign({ id: user._id, email: user.email }, process.env.EMAIL_SIGNATURE, { expiresIn: 60 * 60 * 24 * 30 })
     const link = `${req.protocol}://${req.headers.host}/auth/confirmEmail/${token}`
@@ -244,32 +251,33 @@ export const newConfirmEmail = asyncHandler(async (req, res, next) => {
 })
 
 //2-login-->with create token
-export const login =asyncHandler( async (req, res, next) => {
+export const login = asyncHandler(async (req, res, next) => {
 
     const { email, password } = req.body
     const user = await userModel.findOne({ email })
     console.log(user);
     if (!user) {
-        return next (new Error("In-valid email"))
+        return next(new Error("In-valid email"))
     }
-    if(!user.confirmEmail){
-        return next (new Error("Email not Confirmed"))
+    if (!user.confirmEmail) {
+        return next(new Error("Email not Confirmed"))
     }
     console.log({ FE: password, HashDBPassword: user.password });
     const match = bcrypt.compareSync(password, user.password)
     console.log({ match });
     if (!match) {
-        return next(new Error("In-valid login data") )
+        return next(new Error("In-valid login data"))
     }
-    const  token = jwt.sign({
-        userName:user.userName,
-        id:user._id },
+    const token = jwt.sign({
+        userName: user.userName,
+        id: user._id
+    },
         process.env.TOKEN_SIGNATURE,
         { expiresIn: 60 * 60 }
     )
     //backonline
-    await userModel.updateOne({ _id:user._id }, { isDeleted:false });
-    await userModel.updateOne({ _id:user._id }, { isOnline:true });
+    await userModel.updateOne({ _id: user._id }, { isDeleted: false });
+    await userModel.updateOne({ _id: user._id }, { isOnline: true });
 
     return res.json({ message: "login Successfully🟩", token })
 }
@@ -277,7 +285,7 @@ export const login =asyncHandler( async (req, res, next) => {
 
 
 //7-logout(online/offline)
-export const logout=asyncHandler(async(req,res,next)=>{
-    await userModel.updateOne({ _id:req.user._id }, {  isOnline:false});
+export const logout = asyncHandler(async (req, res, next) => {
+    await userModel.updateOne({ _id: req.user._id }, { isOnline: false });
     return res.json({ message: "You are now logged out🚪" })
 })
