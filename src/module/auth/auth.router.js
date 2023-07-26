@@ -11,6 +11,8 @@ authRouter.post("/", valdation(validators.signup), authController.signup)
 authRouter.post("/login", valdation(validators.login), authController.login)
 authRouter.get("/confirmEmail/:token", authController.confirmEmail)
 authRouter.get("/newConfirmEmail/:token", authController.newConfirmEmail)
+authRouter.get("/unsupscribeEmail/:token", authController.unsupscribeEmail)
+
 
 authRouter.patch('/', auth, authController.logout)
 
