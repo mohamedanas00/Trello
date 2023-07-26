@@ -8,7 +8,7 @@ import * as validators from "./valdation.js";
 const userRouter = Router()
 
 userRouter.get('/', auth, userController.getUser)
-userRouter.put('/', auth, userController.updateUser)
+userRouter.put('/', auth, valdation(validators.updateUser), userController.updateUser)
 userRouter.patch('/', auth, valdation(validators.changePassword), userController.changePassword)
 userRouter.delete('/', auth, userController.deleteUser)
 userRouter.delete('/softDelete', auth, userController.softDelete)
