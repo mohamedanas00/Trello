@@ -1,14 +1,17 @@
 import { Router } from "express";
 
-import * as userController from './controller/user.js' 
+import * as userController from './controller/user.js'
 import { auth } from "../../middleware/authentication.js";
-const userRouter=Router()
+import { valdation } from '../../middleware/validiation.js'
+import * as validators from "./valdation.js";
 
-userRouter.get('/',auth,userController.getUser)
-userRouter.put('/',auth,userController.updateUser)
-userRouter.patch('/',auth,userController.changePassword)
-userRouter.delete('/',auth,userController.deleteUser)
-userRouter.delete('/softDelete',auth,userController.softDelete)
+const userRouter = Router()
+
+userRouter.get('/', auth, userController.getUser)
+userRouter.put('/', auth, userController.updateUser)
+userRouter.patch('/', auth, valdation(validators.changePassword), userController.changePassword)
+userRouter.delete('/', auth, userController.deleteUser)
+userRouter.delete('/softDelete', auth, userController.softDelete)
 
 
 
