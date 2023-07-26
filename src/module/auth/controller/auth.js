@@ -3,18 +3,12 @@ import { asyncHandler } from '../../utils/errorHandeling.js'
 import userModel from '../../../../DB/model/userModel.js'
 import jwt from "jsonwebtoken";
 import sendEmail from '../../utils/email.js';
-import * as validators from '../valdation.js'
 
 
 //1-signUp
 export const signup = asyncHandler(async (req, res, next) => {
     const { userName, firstName, lastName, email, password, cPassword, phone, age, gender } = req.body
     console.log({ userName, firstName, lastName, email, password, phone, age, gender });
-    const valdationResult = validators.signup.validate(req.body)
-
-    if (valdationResult.error) {
-        return res.json({ message: "Valditaion Error", ERR: valdationResult.error.details })
-    }
 
     if (password != cPassword) {
         return next(new Error("Check Your cPassword again!"))
@@ -254,6 +248,7 @@ export const newConfirmEmail = asyncHandler(async (req, res, next) => {
 export const login = asyncHandler(async (req, res, next) => {
 
     const { email, password } = req.body
+
     const user = await userModel.findOne({ email })
     console.log(user);
     if (!user) {
@@ -282,7 +277,6 @@ export const login = asyncHandler(async (req, res, next) => {
     return res.json({ message: "login Successfully🟩", token })
 }
 )
-
 
 //7-logout(online/offline)
 export const logout = asyncHandler(async (req, res, next) => {

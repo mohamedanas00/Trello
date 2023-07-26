@@ -5,10 +5,10 @@ export const signup = joi.object({
     lastName: joi.string().min(3).max(10).required(),
     userName: joi.string().alphanum().min(5).max(20).required(),
     email: joi.string().email().required(),
-    password: joi.string().pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)),
-    cPassword: joi.string().valid(ref("password")).required(),
+    password: joi.string().pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)).required(),
+    cPassword: joi.string().valid(joi.ref("password")).required(),
     age: joi.number().integer().positive().min(16).max(90),
-    phone: joi.string().trim().pattern(/^(?:(?:\+20|20)|0)?(10|11|12|15|16|17|18|19)(\d{8})$/).required(),
+    phone: joi.string().trim().pattern(/^(010|012|011|015)\d{8}$/).required(),
 }).required()
 
 //**password */
@@ -22,3 +22,8 @@ export const signup = joi.object({
 
 //joi .ref cpassword tb3
 //valid a5oh
+
+export const login = joi.object({
+    email: joi.string().email({minDomainSegments:2,maxDomainSegments:4,tlds:{allow:['com','net','edu','eg']}}).required(),
+    password: joi.string().pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)).required(),
+}).required()
