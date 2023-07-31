@@ -1,8 +1,9 @@
 import bcrypt from 'bcryptjs'
-import { asyncHandler } from '../../utils/errorHandeling.js'
 import userModel from '../../../../DB/model/userModel.js'
 import jwt from "jsonwebtoken";
-import sendEmail from '../../utils/email.js';
+import sendEmail from '../../../utils/email.js';
+import { asyncHandler } from '../../../utils/errorHandeling.js';
+
 
 
 //1-signUp

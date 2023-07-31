@@ -1,6 +1,6 @@
 import userModel from "../../../../DB/model/userModel.js"
-import { asyncHandler } from "../../utils/errorHandeling.js"
 import bcrypt from 'bcryptjs'
+import { asyncHandler } from "../../../utils/errorHandeling.js"
 
 
 //Extra{ Get Details} 
@@ -54,3 +54,10 @@ export const softDelete = asyncHandler(async (req, res, next) => {
 
 
 
+export const profilePic = asyncHandler(async (req, res, next) => {
+    const user = await userModel.findByIdAndUpdate(req.user._id,
+        { profilePicture: req.file.path },
+        { new: true }
+    )
+    return res.json({ message: "Done", user })
+})

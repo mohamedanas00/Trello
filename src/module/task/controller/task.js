@@ -1,6 +1,6 @@
 import taskModel from "../../../../DB/model/taskModel.js"
 import userModel from "../../../../DB/model/userModel.js";
-import { asyncHandler } from "../../utils/errorHandeling.js"
+import { asyncHandler } from "../../../utils/errorHandeling.js";
 
 //1-add task with status (toDo)(user must be logged in)
 export const addTask = asyncHandler(async (req, res, next) => {

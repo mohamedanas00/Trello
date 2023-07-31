@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import userModel from "../../DB/model/userModel.js";
-import { asyncHandler } from "../module/utils/errorHandeling.js";
+import { asyncHandler } from "../utils/errorHandeling.js";
 
 
 // export let accessData
