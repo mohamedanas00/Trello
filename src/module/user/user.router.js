@@ -13,7 +13,7 @@ userRouter.put('/', auth, valdation(validators.updateUser), userController.updat
 userRouter.patch('/', auth, valdation(validators.changePassword), userController.changePassword)
 userRouter.delete('/', auth, userController.deleteUser)
 userRouter.delete('/softDelete', auth, userController.softDelete)
-userRouter.post('/profilePic', auth, upload().single("x"), userController.profilePic)
+userRouter.post('/profilePic', auth, upload({ folder: "user/profilepic" }).single("x"), userController.profilePic)
 
 
 
